@@ -1,16 +1,20 @@
 FROM node:14
+
 WORKDIR /usr/src/app
+
 COPY ./package*.json /usr/src/app/
+
 RUN npm install
 COPY ./ /usr/src/app
 EXPOSE 8888
+
 CMD ["node", "index.js"]
 
-#Entrar na pasta node para gerar a imagem "desafio_2_nodejsapp"
-#   docker build -t desafio_2_nodejsapp .
+#Entrar na pasta "node" para gerar a imagem "desafio_2_img_nodejsapp"
+#   docker build -t desafio_2_img_nodejsapp .
 #   docker images
-#Executar o container 
-#   docker run -d -p 8888:8888 --name desafio2_nodejsserver desafio_2_nodejsapp
+#Executar o container desafio2cnt_nodejsserver
+#   docker run -d -p 8888:8888 --name desafio2cnt-nodejsserver desafio_2_img_nodejsapp
 #Testar
 #   http://localhost:8888/ola
 #Ver ip

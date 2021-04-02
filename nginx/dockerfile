@@ -1,0 +1,9 @@
+FROM nginx
+COPY ./default.conf /etc/nginx/conf.d/
+
+#Entrar na pasta "nginx" para gerar a imagem "desafio_2_img_nginxproxy"
+#   docker build -t desafio_2_img_nginxproxy .
+#   docker images
+#Executar o container "desafio2cnt-nginxproxy" com link no container "desafio2cnt_nodejsserver"
+#   docker run -d -p 80:80 --link desafio2cnt-nodejsserver --name desafio2cnt-nginxproxy desafio_2_img_nginxproxy
+                                                                                       

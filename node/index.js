@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const port = 8888
 
-app.get('/ola', function (req, res, next) {
+app.get('/', function (req, res, next) {
         res.send('ola');
 });
 
