@@ -10,13 +10,14 @@ EXPOSE 8888
 
 CMD ["node", "index.js"]
 
-#Entrar na pasta "node" para gerar a imagem "desafio_2_img_nodejsapp"
-#   docker build -t desafio_2_img_nodejsapp .
+#Entrar na pasta "node" para gerar a imagem "torrestor/nodejsapp"
+#   docker build -t torrestor/nodejsapp .
 #   docker images
-#Executar o container desafio2cnt_nodejsserver
-#   docker run -d -p 8888:8888 --name desafio2cnt-nodejsserver desafio_2_img_nodejsapp
+#Executar o container nodejsserver
+#   docker run -d -p 8888:8888 --name nodejsserver torrestor/nodejsapp
 #Testar
-#   http://localhost:8888/ola
+#   http://localhost:8888
 #Ver ip
-#   ip add
-#       http://172.28.79.77:8888/ola
+#   ip addr
+#       http://172.28.79.77:8888
+#       172.19.207.193
