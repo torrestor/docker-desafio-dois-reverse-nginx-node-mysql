@@ -3,7 +3,7 @@ services:
   desafio2_nginxproxyreverse:
     build: 
       context: nginx #pasta da aplicação dockerfile
-      dockerfile: dockerfile ##
+      #dockerfile: dockerfile ##
     container_name: desafio2_nginxproxyreverse 
     networks: 
       - desafio-dois-networks
