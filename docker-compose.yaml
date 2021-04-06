@@ -1,0 +1,57 @@
+version: '3'
+services: 
+  desafio2_app:
+    build: 
+      context: node #pasta da aplicação dockerfile
+      #dockerfile: dockerfile ##
+    container_name: desafio2_app
+    command: node index.js
+    #restart: unless-stopped ##
+    entrypoint: dockerize -wait tcp://desafio2_mysqlDb:3306 -timeout 20s docker-entrypoint.sh #esperar terminar desafio_db através do docker-entrypoint.sh para iniciar desafio_app
+    networks: 
+      - desafio-dois-networks
+    volumes: 
+      - ./node:/usr/src/app   # tudo gravado "/usr/src/app" será replicado "para node" do localhost
+    tty: true
+    ports:
+      - "8888:8888" #porta do computador para porta container http://localhost:3000/
+    depends_on: 
+      - desafio2_mysqlDb
+
+  desafio2_mysqlDb:
+    image: mysql:5.7
+    command: --innodb-use-native-aio=0 #para evitar problema com o mysql
+    container_name: desafio2_mysqlDb    
+    restart: always
+    tty: true #faz o container ficar em execução em segundo plano
+              #não esquecer de criar a pasta mysql no nível do docker-compose
+    volumes: 
+      - ./mysql:/var/lib/mysql #espelhar container a com a pasta mysql local
+    environment: 
+      - MYSQL_DATABASE=desafio_db_node #cria o banco     
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=root
+    networks: 
+      - desafio-dois-networks
+networks: 
+  desafio-dois-networks:
+    driver: bridge
+
+#docker-compose -f docker-compose.yaml up -d 
+#acessar banco
+#   docker logs desafio2_mysqlDb
+#acessar banco
+#   docker exec -it desafio2_mysqlDb bash
+#   mysql -uroot -p
+#   password: root    conforme definido nas váriaveis de ambiente
+#   show databases;
+#   use desafio_db_node
+#     create table people  (id int not null auto_increment, name varchar(255), primary key(id));
+
+#acessar app
+# docker exec -it desafio2_app bash
+#     obs.: se aparecer a porta 8888, pode abrir executar no browser http://localhost:3000/
+#           irá aparecer o conteudo do index.js
+#   ctrl+c
+#     Install mysql
+#       npm install mysql --save
