@@ -2,13 +2,13 @@ FROM node:14
 
 WORKDIR /usr/src/app
 
-COPY ./package*.json /usr/src/app/
+COPY . .
 
 #install client mysql
-RUN apt-get update
+
 RUN npm install
-RUN npm install mysql --save \
-    && apt-get install -y wget 
+
+
 
 #dependencia de container && apt-get install -y wget  
 ENV DOCKERIZE_VERSION v0.6.1
@@ -16,11 +16,11 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-COPY ./ /usr/src/app
+
 
 EXPOSE 8888
 
-CMD ["node", "index.js"]
+#CMD ["node", "index.js"]
 
 #Entrar na pasta "node" para gerar a imagem "torrestor/nodejsapp"
 #   docker build -t torrestor/nodejsapp .

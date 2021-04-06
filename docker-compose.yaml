@@ -9,7 +9,7 @@ services:
       - desafio-dois-networks
     #tty: true
     ports:
-      - "80:80" #porta do computador para porta container acionar http://desafio2_app:8888
+      - "8080:80" #http://localhost:8080 porta do computador para porta container acionar http://desafio2_app:8888
     depends_on: 
       - desafio2_app       
 
@@ -18,13 +18,14 @@ services:
       context: node #pasta da aplicação dockerfile
       #dockerfile: dockerfile ##
     container_name: desafio2_app
-    command: node index.js
+    #command: node index.js  #comentado este está referenciado no entrypoint!
     #restart: unless-stopped ##
-    entrypoint: dockerize -wait tcp://desafio2_mysqlDb:3306 -timeout 20s docker-entrypoint.sh #esperar terminar desafio_db através do docker-entrypoint.sh para iniciar desafio_app
+    entrypoint: dockerize -wait tcp://desafio2_mysqlDb:3306 -timeout 20s node index.js #esperar terminar desafio_db através do docker-entrypoint.sh para iniciar desafio_app e executa "node index.js"
     networks: 
       - desafio-dois-networks
     volumes: 
       - ./node:/usr/src/app   # tudo gravado "/usr/src/app" será replicado "para node" do localhost
+      - /usr/src/app/node_modules      
     tty: true
     ports:
       - "8888:8888" #porta do computador para porta container http://localhost:3000/
@@ -40,10 +41,11 @@ services:
               #não esquecer de criar a pasta mysql no nível do docker-compose
     volumes: 
       - ./mysql:/var/lib/mysql #espelhar container a com a pasta mysql local
+      - ./mysqlScript/CreateTablePeople.sql:/docker-entrypoint-initdb.d/1.sql #copia e é executado!
     environment: 
       - MYSQL_DATABASE=desafio_db_node #cria o banco     
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_USER=root
+      ####- MYSQL_USER=root
     networks: 
       - desafio-dois-networks
 networks: 
