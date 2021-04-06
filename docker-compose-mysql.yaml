@@ -6,7 +6,8 @@ services:
     container_name: desafio2_mysqlDb    
     restart: always
     tty: true #faz o container ficar em execução em segundo plano
-              #não esquecer de criar a pasta mysql no nível do docker-compose
+              #não esquecer de criar a pasta mysql no nível do docker-compos
+    working_dir: ./mysql
     volumes: 
       - ./mysql:/var/lib/mysql #espelhar container a com a pasta mysql local
     environment: 
