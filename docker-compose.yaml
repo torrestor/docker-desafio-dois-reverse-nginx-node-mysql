@@ -1,5 +1,18 @@
 version: '3'
 services: 
+  desafio2_nginxproxyreverse:
+    build: 
+      context: nginx #pasta da aplicação dockerfile
+      dockerfile: dockerfile ##
+    container_name: desafio2_nginxproxyreverse 
+    networks: 
+      - desafio-dois-networks
+    #tty: true
+    ports:
+      - "80:80" #porta do computador para porta container acionar http://desafio2_app:8888
+    depends_on: 
+      - desafio2_app       
+
   desafio2_app:
     build: 
       context: node #pasta da aplicação dockerfile
@@ -55,3 +68,6 @@ networks:
 #   ctrl+c
 #     Install mysql
 #       npm install mysql --save
+
+#Docker-compose
+#   docker-compose -f docker-compose.yaml up -d --build
