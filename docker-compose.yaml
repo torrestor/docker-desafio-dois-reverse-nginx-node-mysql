@@ -34,14 +34,16 @@ services:
 
   desafio2_mysqlDb:
     image: mysql:5.7
-    command: --innodb-use-native-aio=0 #para evitar problema com o mysql
+    #command: --innodb-use-native-aio=0  #para evitar problema com o mysql
+    command: --init-file /tmp/database/01.sql
     container_name: desafio2_mysqlDb    
     restart: always
     tty: true #faz o container ficar em execução em segundo plano
               #não esquecer de criar a pasta mysql no nível do docker-compose
     volumes: 
       - ./mysql:/var/lib/mysql #espelhar container a com a pasta mysql local
-      - ./mysqlScript/CreateTablePeople.sql:/docker-entrypoint-initdb.d/1.sql #copia e é executado!
+      - ./mysqlScript:/docker-entrypoint-initdb.d #copia e é executado! não funciona!
+      - ./mysqlScript:/tmp/database
     environment: 
       - MYSQL_DATABASE=desafio_db_node #cria o banco     
       - MYSQL_ROOT_PASSWORD=root
